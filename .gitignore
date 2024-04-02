@@ -2,6 +2,4 @@
 __pycache__/
 *.DS_Store
 Config.py
-data_copy.csv
-Clean_Data copy.csv
-Config.cpython-311.pyc
+

@@ -1,4 +1,4 @@
-,Year,Date,State,Rating,Injuries,Death,Start Lat,Start Lon,End Lat,End Lon,Width
+,Year,Date,State,Rating,Injuries,Death,Start_Lat,Start_Lon,End_Lat,End_Lon,Width
 43,2022,2022-03-30,LA,EF0,0,0,32,-91,32,-91,25
 44,2022,2022-03-30,LA,EF1,0,0,32,-91,32,-91,350
 45,2022,2022-03-30,MS,EF0,0,0,32,-88,32,-88,125

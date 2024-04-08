@@ -1,4 +1,4 @@
-,Year,Date,State,Rating,Injuries,Death,Start Lat,Start Lon,End Lat,End Lon,Width
+,Year,Date,State,Rating,Injuries,Death,Start_Lat,Start_Lon,End_Lat,End_Lon,Width
 61,2023,2023-01-12,AL,EF0,0,0,32,-87,32,-87,360
 64,2023,2023-01-03,AL,EF0,0,0,32,-86,33,-86,150
 72,2023,2023-06-17,OK,EFU,0,0,36,-98,36,-98,30

@@ -1,5 +1,5 @@
 // Populate Year dropdown menu
-for (let j = 1950; j < 2024; j++) {
+for (let j = 1979; j < 2024; j++) {
     d3.select("#selYear").append("option").attr("value", j).text(j);
   };
 
@@ -13,6 +13,7 @@ const url = "http://127.0.0.1:5000/api/v1.0/"
 
 // Set up initial variables
 let sample = []
+let states_dict = ["AL", "IA", "KS", "KY", "LA", "MS", "NE", "OK", "TN"]
 
 // // Fetch the JSON data
 // d3.json(url + state + "/" + year).then(function(data) {
@@ -25,78 +26,51 @@ let sample = []
 
 // Trigger New Graphs when Dropdown Menu changed
 d3.selectAll("#selYear").on("change", optionChanged);
-d3.selectAll("#selState").on("change", optionChanged);
+// d3.selectAll("#selState").on("change", optionChanged);
 
 function optionChanged() {
 
   // Determine value chosen from Dropdown Menu
-  let state = d3.select("#selState").property("value");
+  // let state = d3.select("#selState").property("value");
   let year = d3.select("#selYear").property("value");
-  d3.json(url + state + "/" + year).then(function(data) {
+  d3.json(url  + year).then(function(data) {
     sample = data;
-    console.log(sample)
+    
+    let state_counter = [0, 0, 0 , 0, 0, 0, 0, 0, 0]
+    for (let k = 0; k < sample.length; k++) {
+      for (let i = 0; i < states_dict.length; i++) {
+        if (sample[k]["State"] == states_dict[i]) {
+          state_counter[i] += 1
+        }
+      }
+    }
+    // console.log(state_counter)
+    // Set up Horizontal Bar Chart parameters
+    let trace1 = {
+      x: state_counter,
+      y: states_dict,
+      type: "bar",
+      orientation: "h",
+      text: states_dict,
+      
+      // Organize in descending order reference: https://community.plotly.com/t/horizontal-bar-automatically-order-by-numerical-value/7183
+      transforms: [{
+          type: "sort",
+          target: "y",
+          order: "descending"
+          }]
+      };
+
+    let hbarInfo = [trace1];
+
+    let layout1 = {
+      title: "Number of Tornadoes in Selected Year",
+      xaxis: {title: "Sample Values"},
+      height: 600,
+      width: 600
+      };
+
+    // Render Horizontal Bar Chart to the div tag with id "bar"
+    Plotly.newPlot("state_chart", hbarInfo, layout1);
   })
 };
-
-// Creating our initial map object:
-// We set the longitude, latitude, and starting zoom level.
-// This gets inserted into the div with an id of "map".
-// let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(myMap);
-
-// let myMap = L.map("map", {
-//   center: [45.52, -122.67],
-//   zoom: 13,
-//   layers: [street]
-// });
-
-// Adding a tile layer (the background map image) to our map:
-// We use the addTo() method to add objects to our map.
-
-
-
-  // function createMap() {
-    
-  //   // Create the base layers.
-  // let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  // })
-
-  // let topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-  //   attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-  // });
-
-
-//   // Create layer group for earthquake markers
-//   // let quakeLayer = L.layerGroup(earthquakeMarkers)
-
-//   // Create a baseMaps object.
-//   let baseMaps = {
-//     "Street Map": street,
-//     "Topographic Map": topo
-//   };
-
-//   // Create an overlay object to hold our overlay.
-//   // let overlayMaps = {
-//   //   Earthquakes: quakeLayer
-//   // };
-
-//   // Create our map, giving it the streetmap and earthquakes layers to display on load.
-//   let myMap = L.map("map", {
-//     center: [
-//       37.09, -95.71
-//     ],
-//     zoom: 4,
-//     layers: [street]
-//   });
-
-//   // Create a layer control.
-// // Pass it our baseMaps and overlayMaps.
-// // Add the layer control to the map.
-// L.control.layers(baseMaps, 
-//   overlayMaps, 
-//   {collapsed: false}).addTo(myMap);
-// }
-
-// createMap()

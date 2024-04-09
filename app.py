@@ -6,7 +6,7 @@ import datetime as dt
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine, func, inspect
 
 from flask import Flask, jsonify
 import pandas as pd
@@ -15,8 +15,24 @@ import pandas as pd
 # Database Setup
 #################################################
 
+# Pull postgreSQL credentials
+user = 'postgres'
+password = 'postgres'
+host = 'localhost'
+port = '5432'
+database = 'tornado_alley'
+
+# Establish connection string
+connection_str = f"postgresql://{user}:{password}@{host}:{port}/{database}"
+
 # Create engine using the ***insert correct name*** database file
-engine = create_engine("sqlite:///Resources/hawaii.sqlite")
+engine = create_engine(connection_str)
+
+# inspector = inspect(engine)
+# inspector.get_table_names()
+# columns = inspector.get_columns('tornado_data')
+# for column in columns:
+#     print(column["name"], column["type"])
 
 # Declare a Base using `automap_base()`
 Base = automap_base()
@@ -25,10 +41,7 @@ Base = automap_base()
 Base.prepare(autoload_with=engine)
 
 # Assign the ***name needed*** class to a variable called `Measurement`
-Measurement = Base.classes.measurement
-
-# Create a session
-session = Session(engine)
+alldata = Base.classes.tornado_data
 
 #################################################
 # Flask Setup
@@ -48,13 +61,31 @@ def welcome():
         f"/api/v1.0/<state>/<year><br/>"
         )
 
-@app.route(f"/api/v1.0/<state>/<year><br/>")
-def data_pull(start, year):
-    "Return JSON data specific to the given start and year"
-    
+@app.route(f"/api/v1.0/<state>/<year>")
+def data_pull(state, year):
+    # Create a session
+    session = Session(engine)
 
-#Close out the session
-session.close()
+    # Select information to pull
+    sel = [alldata.year, alldata.state, alldata.rating]
+
+    #Return JSON data specific to the given start and year
+    results = session.query(*sel).filter(alldata.year == year).filter(alldata.state == state).all()
+
+    #Close out the session
+    session.close()
+    chosen_data = []
+    for calyear, givstate, rating in results:
+        tornado_dict = {}
+        tornado_dict["Year"] = calyear
+        tornado_dict["State"] = givstate
+        tornado_dict["rating"] = rating
+        chosen_data.append(tornado_dict)
+
+
+    return jsonify(chosen_data)
+
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

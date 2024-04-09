@@ -1,4 +1,4 @@
-,Year,Date,State,Rating,Injuries,Death,Start_Lat,Start_Lon,End_Lat,End_Lon,Width
+index_name,Year,Date,State,Rating,Injuries,Death,Start_Lat,Start_Lon,End_Lat,End_Lon,Width
 19361,1979,1979-03-18,KS,1,0,0,39,-96,39,-96,150
 19363,1979,1979-03-18,OK,2,0,0,36,-95,36,-95,33
 19364,1979,1979-03-18,OK,3,0,0,36,-95,36,-95,30

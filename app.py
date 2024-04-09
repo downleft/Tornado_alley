@@ -6,9 +6,10 @@ import datetime as dt
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func, inspect
+from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
+from flask_cors import CORS, cross_origin
 import pandas as pd
 
 #################################################
@@ -47,6 +48,15 @@ alldata = Base.classes.tornado_data
 # Flask Setup
 #################################################
 app = Flask(__name__)
+CORS(app)
+#CORS(app, resources={r"/api/*": {"origins": "*"}})
+# CORS(app, resources={
+#     r"/*": {
+#         "origins": "*"
+#     }
+# })
+# app.config['CORS_HEADERS'] = 'application/json'
+# app.config['CORS_ORIGINS'] = '*'
 
 #################################################
 # Flask Routes
@@ -62,12 +72,13 @@ def welcome():
         )
 
 @app.route(f"/api/v1.0/<state>/<year>")
+@cross_origin()
 def data_pull(state, year):
     # Create a session
     session = Session(engine)
 
     # Select information to pull
-    sel = [alldata.year, alldata.state, alldata.rating]
+    sel = [alldata.year, alldata.state, alldata.rating, alldata.injuries, alldata.death, alldata.start_lat, alldata.start_lon, alldata.width]
 
     #Return JSON data specific to the given start and year
     results = session.query(*sel).filter(alldata.year == year).filter(alldata.state == state).all()
@@ -75,13 +86,17 @@ def data_pull(state, year):
     #Close out the session
     session.close()
     chosen_data = []
-    for calyear, givstate, rating in results:
+    for calyear, givstate, rating, injuries, deaths, latitude, longitude, width in results:
         tornado_dict = {}
         tornado_dict["Year"] = calyear
         tornado_dict["State"] = givstate
-        tornado_dict["rating"] = rating
+        tornado_dict["Rating"] = rating
+        tornado_dict["Injuries"] = injuries
+        tornado_dict["Deaths"] = deaths
+        tornado_dict["Latitude"] = latitude
+        tornado_dict["Longitude"] = longitude
+        tornado_dict["Width"] = width
         chosen_data.append(tornado_dict)
-
 
     return jsonify(chosen_data)
 

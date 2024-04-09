@@ -5,22 +5,51 @@ for (let j = 1950; j < 2024; j++) {
 
 // Populate States dropdown menu
 // States JSON format from https://gist.github.com/mshafrir/2646763#file-states_titlecase-json
-for (let i = 0; allstates.length; i++) {
-    d3.select("#selState").append("option").attr("value", allstates[i]["abbreviation"]).text(allstates[i]["name"]);
-  };
+// for (let i = 0; allstates.length; i++) {
+//     d3.select("#selState").append("option").attr("value", allstates[i]["abbreviation"]).text(allstates[i]["name"])
+//   };
+
+const url = "http://127.0.0.1:5000/api/v1.0/"
+
+// Set up initial variables
+let sample = []
+
+// // Fetch the JSON data
+// d3.json(url + state + "/" + year).then(function(data) {
+//   sample = data;
+
+//   // Establish default graph
+//   console.log(sample)
+//   optionChanged();
+// });
+
+// Trigger New Graphs when Dropdown Menu changed
+d3.selectAll("#selYear").on("change", optionChanged);
+d3.selectAll("#selState").on("change", optionChanged);
+
+function optionChanged() {
+
+  // Determine value chosen from Dropdown Menu
+  let state = d3.select("#selState").property("value");
+  let year = d3.select("#selYear").property("value");
+  d3.json(url + state + "/" + year).then(function(data) {
+    sample = data;
+    console.log(sample)
+  })
+};
 
 // Creating our initial map object:
 // We set the longitude, latitude, and starting zoom level.
 // This gets inserted into the div with an id of "map".
-let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(myMap);
+// let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(myMap);
 
-let myMap = L.map("map", {
-  center: [45.52, -122.67],
-  zoom: 13,
-  layers: [street]
-});
+// let myMap = L.map("map", {
+//   center: [45.52, -122.67],
+//   zoom: 13,
+//   layers: [street]
+// });
 
 // Adding a tile layer (the background map image) to our map:
 // We use the addTo() method to add objects to our map.

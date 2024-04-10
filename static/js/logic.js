@@ -37,14 +37,19 @@ function optionChanged() {
     sample = data;
     
     let state_counter = [0, 0, 0 , 0, 0, 0, 0, 0, 0]
+    let injury_total = [0, 0, 0 , 0, 0, 0, 0, 0, 0]
+    let fatality_total = [0, 0, 0 , 0, 0, 0, 0, 0, 0]
+
     for (let k = 0; k < sample.length; k++) {
       for (let i = 0; i < states_dict.length; i++) {
         if (sample[k]["State"] == states_dict[i]) {
           state_counter[i] += 1
+          injury_total[i] += sample[k]["Injuries"]
+          fatality_total[i] += sample[k]["Deaths"]
         }
       }
     }
-    // console.log(state_counter)
+    
     // Set up Horizontal Bar Chart parameters
     let trace1 = {
       x: state_counter,
@@ -66,11 +71,67 @@ function optionChanged() {
     let layout1 = {
       title: "Number of Tornadoes in Selected Year",
       xaxis: {title: "Sample Values"},
-      height: 600,
-      width: 600
+      height: 500,
+      width: 500
       };
 
     // Render Horizontal Bar Chart to the div tag with id "bar"
     Plotly.newPlot("state_chart", hbarInfo, layout1);
+
+    // Set up Horizontal Bar Chart parameters
+    let trace2 = {
+      x: injury_total,
+      y: states_dict,
+      type: "bar",
+      orientation: "h",
+      text: states_dict,
+      
+      // Organize in descending order reference: https://community.plotly.com/t/horizontal-bar-automatically-order-by-numerical-value/7183
+      transforms: [{
+          type: "sort",
+          target: "y",
+          order: "descending"
+          }]
+      };
+
+      let hbarInfo2 = [trace2];
+
+      let layout2 = {
+        title: "Number of Injuries in Selected Year",
+        xaxis: {title: "Sample Values"},
+        height: 500,
+        width: 500
+      };
+
+      // Render Horizontal Bar Chart to the div tag with id "bar"
+      Plotly.newPlot("injury_chart", hbarInfo2, layout2);
+
+      // Set up Horizontal Bar Chart parameters
+    let trace3 = {
+      x: fatality_total,
+      y: states_dict,
+      type: "bar",
+      orientation: "h",
+      text: states_dict,
+      
+      // Organize in descending order reference: https://community.plotly.com/t/horizontal-bar-automatically-order-by-numerical-value/7183
+      transforms: [{
+          type: "sort",
+          target: "y",
+          order: "descending"
+          }]
+      };
+
+      let hbarInfo3 = [trace3];
+
+      let layout3 = {
+        title: "Number of Fatalities in Selected Year",
+        xaxis: {title: "Sample Values"},
+        height: 500,
+        width: 500
+      };
+
+      // Render Horizontal Bar Chart to the div tag with id "bar"
+      Plotly.newPlot("fatality_chart", hbarInfo3, layout3);
   })
 };

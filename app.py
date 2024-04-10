@@ -29,12 +29,6 @@ connection_str = f"postgresql://{user}:{password}@{host}:{port}/{database}"
 # Create engine using the ***insert correct name*** database file
 engine = create_engine(connection_str)
 
-# inspector = inspect(engine)
-# inspector.get_table_names()
-# columns = inspector.get_columns('tornado_data')
-# for column in columns:
-#     print(column["name"], column["type"])
-
 # Declare a Base using `automap_base()`
 Base = automap_base()
 
@@ -49,14 +43,6 @@ alldata = Base.classes.tornado_data
 #################################################
 app = Flask(__name__)
 CORS(app)
-#CORS(app, resources={r"/api/*": {"origins": "*"}})
-# CORS(app, resources={
-#     r"/*": {
-#         "origins": "*"
-#     }
-# })
-# app.config['CORS_HEADERS'] = 'application/json'
-# app.config['CORS_ORIGINS'] = '*'
 
 #################################################
 # Flask Routes
@@ -70,35 +56,6 @@ def welcome():
         f"/api/v1.0/<year><br/>"
         f"/api/v1.0/<state>/<year><br/>"
         )
-
-# @app.route(f"/api/v1.0/<state>/<year>")
-# @cross_origin()
-# def data_pull(state, year):
-#     # Create a session
-#     session = Session(engine)
-
-#     # Select information to pull
-#     sel = [alldata.year, alldata.state, alldata.rating, alldata.injuries, alldata.death, alldata.start_lat, alldata.start_lon, alldata.width]
-
-#     #Return JSON data specific to the given start and year
-#     results = session.query(*sel).filter(alldata.year == year).filter(alldata.state == state).all()
-
-#     #Close out the session
-#     session.close()
-#     chosen_data = []
-#     for calyear, givstate, rating, injuries, deaths, latitude, longitude, width in results:
-#         tornado_dict = {}
-#         tornado_dict["Year"] = calyear
-#         tornado_dict["State"] = givstate
-#         tornado_dict["Rating"] = rating
-#         tornado_dict["Injuries"] = injuries
-#         tornado_dict["Deaths"] = deaths
-#         tornado_dict["Latitude"] = latitude
-#         tornado_dict["Longitude"] = longitude
-#         tornado_dict["Width"] = width
-#         chosen_data.append(tornado_dict)
-
-#     return jsonify(chosen_data)
 
 @app.route(f"/api/v1.0/<year>")
 @cross_origin()

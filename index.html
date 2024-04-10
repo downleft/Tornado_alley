@@ -39,28 +39,14 @@
                 <select id="selYear" onchange="optionChanged(this.value)"></select>
               </div>
             </div>
-            <div class="col-md-2">
-                <div class="card card-body bg-light">
-                  <h6>State</h6>
-                  <select id="selState" onchange="optionChanged(this.value)">
-                    <option value = "AL">Alabama</option>
-                    <option value = "IA">Iowa</option>
-                    <option value = "KS">Kansas</option>
-                    <option value = "KY">Kentucky</option>
-                    <option value = "LA">Louisiana</option>
-                    <option value = "MS">Mississippi</option>
-                    <option value = "NE">Nebraska</option>
-                    <option value = "OK">Oklahoma</option>
-                    <option value = "TN">Tennessee</option>
-                  </select>
-                </div>
-            </div>
         </div>
+        <hr>
         <div class="row">
           <div class="col-md-12">
             <div id="state_chart"></div>
           </div>
         </div>
+        <hr>
         <div class="row">
           <div class="col-md-5">
             <div id="injury_chart"></div>
@@ -69,16 +55,16 @@
             <div id="fatality_chart"></div>
           </div>
         </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            <img alt="Tornadoes_Per_Year" src="Tornado_Visualizations/Tornadoes_Per_Year.png" 
+            width = 1200
+            height = 400/>
+          </div>
+        </div>
     <hr>
-        <!-- The div that holds our map -->
-    <div id="map" style="height: 800 px"></div>
-
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""></script>
-    <!-- D3 JavaScript -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+        
   <!-- Our JavaScript -->
   <script type="text/javascript" src="static/js/states_list.js"></script>
   <script type="text/javascript" src="static/js/logic.js"></script>

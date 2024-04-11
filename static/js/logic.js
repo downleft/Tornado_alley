@@ -10,6 +10,9 @@ let sample = []
 let states_dict = ["AL", "IA", "KS", "KY", "LA", "MS", "NE", "OK", "TN"]
 let states_names = ["Alabama", "Iowa", "Kansas", "Kentucky", "Louisiana", "Mississippi", "Nebraska", "Oklahoma", "Tennessee"]
 
+// Call table for first year in data set
+optionChanged()
+
 // Trigger New Graphs when Dropdown Menu changed
 d3.selectAll("#selYear").on("change", optionChanged);
 
@@ -42,7 +45,7 @@ function optionChanged() {
       orientation: "h",
       text: states_names,
       
-      // Organize in descending order reference: https://community.plotly.com/t/horizontal-bar-automatically-order-by-numerical-value/7183
+      // Organize in descending order by number of tornadoes
       transforms: [{
           type: "sort",
           target: "x",
@@ -53,13 +56,14 @@ function optionChanged() {
     let hbarInfo = [trace1];
 
     let layout1 = {
-      title: "Number of Tornadoes in Selected Year",
-      xaxis: {title: "Sample Values"},
+      title: `Number of Tornadoes in ${year}`,
+      xaxis: {title: "Tornado Count"},
+      yaxis: {title: "State"},
       height: 500,
       width: 500
       };
 
-    // Render Horizontal Bar Chart to the div tag with id "bar"
+    // Render Horizontal Bar Chart to the div tag with id "state_chart"
     Plotly.newPlot("state_chart", hbarInfo, layout1);
 
     // Set up Horizontal Bar Chart parameters
@@ -70,7 +74,7 @@ function optionChanged() {
       orientation: "h",
       text: states_names,
       
-      // Organize in descending order reference: https://community.plotly.com/t/horizontal-bar-automatically-order-by-numerical-value/7183
+      // Organize in descending order reference by number of injuries
       transforms: [{
           type: "sort",
           target: "x",
@@ -81,13 +85,14 @@ function optionChanged() {
       let hbarInfo2 = [trace2];
 
       let layout2 = {
-        title: "Number of Injuries in Selected Year",
-        xaxis: {title: "Sample Values"},
+        title: `Number of Injuries in ${year}`,
+        xaxis: {title: "Injury Count"},
+        yaxis: {title: "State"},
         height: 500,
         width: 500
       };
 
-      // Render Horizontal Bar Chart to the div tag with id "bar"
+      // Render Horizontal Bar Chart to the div tag with id "injury_chart"
       Plotly.newPlot("injury_chart", hbarInfo2, layout2);
 
       // Set up Horizontal Bar Chart parameters
@@ -98,7 +103,7 @@ function optionChanged() {
       orientation: "h",
       text: states_names,
       
-      // Organize in descending order reference: https://community.plotly.com/t/horizontal-bar-automatically-order-by-numerical-value/7183
+      // Organize in descending order reference by number of deaths
       transforms: [{
           type: "sort",
           target: "x",
@@ -109,13 +114,14 @@ function optionChanged() {
       let hbarInfo3 = [trace3];
 
       let layout3 = {
-        title: "Number of Fatalities in Selected Year",
-        xaxis: {title: "Sample Values"},
+        title: `Number of Fatalities in ${year}`,
+        xaxis: {title: "Fatality Count"},
+        yaxis: {title: "State"},
         height: 500,
         width: 500
       };
 
-      // Render Horizontal Bar Chart to the div tag with id "bar"
+      // Render Horizontal Bar Chart to the div tag with id "fatality_chart"
       Plotly.newPlot("fatality_chart", hbarInfo3, layout3);
   })
 };

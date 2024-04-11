@@ -40,7 +40,8 @@ To recreate the analysis:
 4. Import the merged_data.csv file to the "tornado_data" table just created in PostgreSQL
 5. Open the app.py file and put your username and password in lines 20 and 21 to access the PostgreSQL database.
 6. In your device's terminal/gitbash, start up the app.py file so the Flask API can access the database.
-7. In the terminal/gitbash, spin up a local server so that you can access the maps and the interactive dashboard.
+- You may need to do a pip install of flask_cors and psycopg2 in order for the Flask API to work properly.
+7. In the terminal/gitbash, spin up a local server from the main repository folder so that you can access the maps and the interactive dashboard.
 
 ## Results
 

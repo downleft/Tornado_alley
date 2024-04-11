@@ -39,18 +39,14 @@ To recreate the analysis:
 3. Within the "tornado_alley" database, use the tornado_alley.sql file to create a table named "tornado_data"
 4. Import the merged_data.csv file to the "tornado_data" table just created in PostgreSQL
 5. Open the app.py file and put your username and password in lines 20 and 21 to access the PostgreSQL database.
-6. In your device's terminal/gitbash, start up the app.py file so the Flask API can access the database.
+6. From the dev environment of your device's terminal/gitbash, start up the app.py file so the Flask API can access the database.
 - You may need to do a pip install of flask_cors and psycopg2 in order for the Flask API to work properly.
-7. In the terminal/gitbash, spin up a local server from the main repository folder so that you can access the maps and the interactive dashboard.
+7. In the terminal/gitbash, spin up a local server from the main repository folder so that you can view the maps and the interactive dashboard in your browser.
 
 ## Results
 
 ### Tornado Alley Shift Analysis
-
-[summerize our findings on if there is a shift or not]
+In viewing the maps, we can see that that is an increase of tornado occurrences across multiple states.  As such, it appears that tornado alley is spreading rather than shifting.
 
 ### Tornado Intensity Analysis
-
-[summerize our findings over the past 50 years]
-
-
+Over the past 45 years, it appears that there has been an increase in the occurrence of tornadoes of lower magnitude.

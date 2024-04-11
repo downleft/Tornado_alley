@@ -35,8 +35,12 @@ The tornado data used in this analysis is sourced from two main datasets:
 To recreate the analysis:
 
 1. Clone this repository to your local machine.
-2.
-3. 
+2. In PostgreSQL, create a database entitled "tornado_alley"
+3. Within the "tornado_alley" database, use the tornado_alley.sql file to create a table named "tornado_data"
+4. Import the merged_data.csv file to the "tornado_data" table just created in PostgreSQL
+5. Open the app.py file and put your username and password in lines 20 and 21 to access the PostgreSQL database.
+6. In your device's terminal/gitbash, start up the app.py file so the Flask API can access the database.
+7. In the terminal/gitbash, spin up a local server so that you can access the maps and the interactive dashboard.
 
 ## Results
 

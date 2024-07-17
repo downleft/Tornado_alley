@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tornado Alley Maps</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        .map-container {
+            display: none;
+        }
+        #map-buttons {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        #map-buttons button {
+            margin: 5px;
+        }
+        #map-buttons-top {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        #map-buttons-bottom {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="map-buttons-top">
+        <button onclick="showTornadoAlley1970()">Tornado Alley 1970</button>
+        <button onclick="showTornadoAlley1980()">Tornado Alley 1980</button>
+        <button onclick="showTornadoAlley1990()">Tornado Alley 1990</button>
+        <button onclick="showTornadoAlley2000()">Tornado Alley 2000</button>
+        <button onclick="showTornadoAlley2010()">Tornado Alley 2010</button>
+    </div>
+    <div id="map-buttons-bottom">
+        <button onclick="showNewTornadoAlley1970()">New Tornado Alley 1970</button>
+        <button onclick="showNewTornadoAlley1980()">New Tornado Alley 1980</button>
+        <button onclick="showNewTornadoAlley1990()">New Tornado Alley 1990</button>
+        <button onclick="showNewTornadoAlley2000()">New Tornado Alley 2000</button>
+        <button onclick="showNewTornadoAlley2010()">New Tornado Alley 2010</button>
+    </div>
+
+    <div id="map-container-1970" class="map-container">
+        <div id="map-tornado-alley-1970" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-1980" class="map-container">
+        <div id="map-tornado-alley-1980" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-1990" class="map-container">
+        <div id="map-tornado-alley-1990" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-2000" class="map-container">
+        <div id="map-tornado-alley-2000" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-2010" class="map-container">
+        <div id="map-tornado-alley-2010" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-new-1970" class="map-container">
+        <div id="map-new-tornado-alley-1970" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-new-1980" class="map-container">
+        <div id="map-new-tornado-alley-1980" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-new-1990" class="map-container">
+        <div id="map-new-tornado-alley-1990" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-new-2000" class="map-container">
+        <div id="map-new-tornado-alley-2000" style="height: 600px;"></div>
+    </div>
+    <div id="map-container-new-2010" class="map-container">
+        <div id="map-new-tornado-alley-2010" style="height: 600px;"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        // Function to show the map for Tornado Alley 1970
+        function showTornadoAlley1970() {
+            showMap('map-container-1970', 'map-tornado-alley-1970', 1970, ['KS', 'NE', 'IA', 'OK', 'TX']);
+        }
+
+        // Function to show the map for Tornado Alley 1980
+        function showTornadoAlley1980() {
+            showMap('map-container-1980', 'map-tornado-alley-1980', 1980, ['KS', 'NE', 'IA', 'OK', 'TX']);
+        }
+
+        // Function to show the map for Tornado Alley 1990
+        function showTornadoAlley1990() {
+            showMap('map-container-1990', 'map-tornado-alley-1990', 1990, ['KS', 'NE', 'IA', 'OK', 'TX']);
+        }
+
+        // Function to show the map for Tornado Alley 2000
+        function showTornadoAlley2000() {
+            showMap('map-container-2000', 'map-tornado-alley-2000', 2000, ['KS', 'NE', 'IA', 'OK', 'TX']);
+        }
+
+        // Function to show the map for Tornado Alley 2010
+        function showTornadoAlley2010() {
+            showMap('map-container-2010', 'map-tornado-alley-2010', 2010, ['KS', 'NE', 'IA', 'OK', 'TX']);
+        }
+
+        // Function to show the map for New Tornado Alley 1970
+        function showNewTornadoAlley1970() {
+            showMap('map-container-new-1970', 'map-new-tornado-alley-1970', 1970, ['AR', 'LA', 'MS', 'MO']);
+        }
+
+        // Function to show the map for New Tornado Alley 1980
+        function showNewTornadoAlley1980() {
+            showMap('map-container-new-1980', 'map-new-tornado-alley-1980', 1980, ['AR', 'LA', 'MS', 'MO']);
+        }
+
+        // Function to show the map for New Tornado Alley 1990
+        function showNewTornadoAlley1990() {
+            showMap('map-container-new-1990', 'map-new-tornado-alley-1990', 1990, ['AR', 'LA', 'MS', 'MO']);
+        }
+
+        // Function to show the map for New Tornado Alley 2000
+        function showNewTornadoAlley2000() {
+            showMap('map-container-new-2000', 'map-new-tornado-alley-2000', 2000, ['AR', 'LA', 'MS', 'MO']);
+        }
+
+        // Function to show the map for New Tornado Alley 2010
+        function showNewTornadoAlley2010() {
+            showMap('map-container-new-2010', 'map-new-tornado-alley-2010', 2010, ['AR', 'LA', 'MS', 'MO']);
+        }
+
+        // Function to show a map for a specific year and states
+        function showMap(containerId, mapId, year, states) {
+            // Hide all map containers
+            var mapContainers = document.querySelectorAll('.map-container');
+            mapContainers.forEach(function(container) {
+                container.style.display = 'none';
+            });
+
+            // Show the selected map container
+            var selectedContainer = document.getElementById(containerId);
+            if (selectedContainer) {
+                selectedContainer.style.display = 'block';
+            }
+
+            // Load and render the map
+            var map = L.map(mapId).setView([37.0902, -95.7129], 5); // Zoom level adjusted
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Parse the CSV data
+            Papa.parse('us_tornado_dataset_1950_2021.csv', {
+                download: true,
+                header: true,
+                dynamicTyping: true,
+                complete: function(results) {
+                    var data = results.data;
+                    var tornadoes = data.filter(function(row) {
+                        return row.yr === year && states.includes(row.st);
+                    });
+
+                    tornadoes.forEach(function(tornado) {
+                        var lat = tornado.slat;
+                        var lon = tornado.slon;
+                        var intensity = tornado.mag;
+                        var distance = tornado.len;
+                        var month = tornado.mo;
+
+                        if (!isNaN(lat) && !isNaN(lon)) {
+                            var markerIconUrl;
+                            if (intensity === 0 || intensity === 1) {
+                                markerIconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+                            } else if (intensity === 2 || intensity === 3) {
+                                markerIconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png';
+                            } else if (intensity === 4) {
+                                markerIconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png';
+                            } else if (intensity === 5) {
+                                markerIconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
+                            }
+
+                            var markerIcon = L.icon({
+                                iconUrl: markerIconUrl,
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            });
+
+                            var marker = L.marker([lat, lon], {icon: markerIcon}).addTo(map);
+                            var popupContent = "Year: " + year + "<br>Month: " + month + "<br>Intensity: " + intensity + "<br>Miles Traveled: " + distance;
+                            marker.bindPopup(popupContent);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

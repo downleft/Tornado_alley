@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tornadoes from 2020 Map (KS, NE, IA, OK, TX)</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        var map = L.map('map').setView([37.0902, -95.7129], 4);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Parse the CSV data
+        Papa.parse('us_tornado_dataset_1950_2021.csv', {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            complete: function(results) {
+                var data = results.data;
+
+                // Map month numbers to their names
+                var monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+
+                // Filter data to find tornadoes from 2020 in KS, NE, IA, OK, TX
+                var tornadoes2020InStates = data.filter(function(row) {
+                    return row.yr === 2020 && ['KS', 'NE', 'IA', 'OK', 'TX'].includes(row.st); // Filter by year and states
+                });
+
+                console.log("Number of Tornadoes in 2020 in KS, NE, IA, OK, TX:", tornadoes2020InStates.length);
+
+                // Iterate over tornadoes and display markers
+                tornadoes2020InStates.forEach(function(tornado) {
+                    // Extract latitude, longitude, intensity, and year
+                    var lat = tornado.slat;
+                    var lon = tornado.slon;
+                    var intensity = tornado.mag;
+                    var year = tornado.yr;
+                    var month = monthNames[tornado.mo - 1]; // Adjust month index
+
+                    // Check if latitude and longitude are valid
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        // Define marker coordinates
+                        var markerCoordinates = [lat, lon];
+
+                        // Define marker icon based on intensity
+                        var markerIconUrl;
+                        if (intensity === 0 || intensity === 1) {
+                            // Light green marker icon for category 0 and 1 tornadoes
+                            markerIconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+                        } else if (intensity === 2 || intensity === 3) {
+                            // Yellow marker icon for category 2 and 3 tornadoes
+                            markerIconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png';
+                        } else if (intensity === 4 || intensity === 5) {
+                            // Default red marker icon for category 4 and 5 tornadoes
+                            markerIconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
+                        }
+
+                        var markerIcon = L.icon({
+                            iconUrl: markerIconUrl,
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        });
+
+                        // Define popup content with intensity, month, and year of occurrence
+                        var popupContent = "<b>Month:</b> " + month + "<br><b>Year:</b> " + year + "<br><b>Intensity:</b> " + intensity;
+
+                        // Create a marker with custom icon and popup content, then add it to the map
+                        var marker = L.marker(markerCoordinates, { icon: markerIcon }).addTo(map);
+                        
+                        // Bind popup with intensity, month, and year information to marker
+                        marker.bindPopup(popupContent);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

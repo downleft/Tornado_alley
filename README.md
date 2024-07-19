@@ -1,5 +1,7 @@
+Note: Version 2 is currently in  progress
 
-Project_3
+Version 1 was our third project in the UNC Data Analytics Boot Camp
+
 # # Tornado_alley Project
 
 This project aims to analyze tornado data over the past 50 years to determine if there have been any shifts in tornado alley and to examine changes in tornado intensity.

@@ -158,6 +158,10 @@ let allstates = [
         "abbreviation": "PA"
     },
     {
+        "name": "Puerto Rico",
+        "abbreviation": "PR"
+    },
+    {
         "name": "Rhode Island",
         "abbreviation": "RI"
     },

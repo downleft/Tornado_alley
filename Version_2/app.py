@@ -21,7 +21,7 @@ user = 'postgres'
 password = 'postgres'
 host = 'localhost'
 port = '5432'
-database = 'tornado_alley'
+database = 'Meteorology'
 
 # Establish connection string
 connection_str = f"postgresql://{user}:{password}@{host}:{port}/{database}"
@@ -42,7 +42,7 @@ alldata = Base.classes.tornado_data
 # Flask Setup
 #################################################
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 
 #################################################
 # Flask Routes

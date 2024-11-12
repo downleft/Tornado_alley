@@ -4,6 +4,10 @@ body, html {
     margin: 0;
     font-family: Arial;
   }
+
+p, html {
+    text-align: left;
+  }
   
   /* Style tab links */
   .tablink {
